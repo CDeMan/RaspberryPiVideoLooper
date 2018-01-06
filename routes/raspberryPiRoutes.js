@@ -115,6 +115,11 @@ router.post('/remote', function(req, res){
 			var dir = req.body.option;
 			fast(res, dir);
 			break;
+		case "fast":
+			//pause
+			var dir = req.body.option;
+			volume(res, dir);
+			break;
 		case "episodes":
 			//get episodes
 			res = getEpisodes(res);
@@ -249,6 +254,25 @@ function fast(res, direction){
 		player.fastFwd();
 	}else if(direction == 1){
 		player.rewind();
+	}else{
+		res.json({sucess: false});
+		return res;
+	}
+	res.json({sucess: true});
+	return res;
+}
+
+function volume(res, direction){
+	if(direction == 0){
+		player.volUp();
+		if(volume <= 100){
+			volume++;
+		}
+	}else if(direction == 1){
+		player.volDown();
+		if(volume >= 0){
+			volume--;
+		}
 	}else{
 		res.json({sucess: false});
 		return res;
