@@ -62,11 +62,19 @@ fs.readdir(path, function(err, items) {
 
 	setCount(items.length);
 
-	i = storage.getItemSync('count');
+	var temp = storage.getItemSync('count');
 
-	if(!i || i >= count){
-		i = 0;
+	console.log("stored value: "+temp);
+
+	if(!temp || temp >= getCount() || temp < 0){
+		temp = 0;
 	}
+
+	console.log("set counter to: "+temp);
+
+	setCounter(temp);
+
+	
 
 	//player = Omx(path+"/"+items[i], "hdmi", false, 100);
 
