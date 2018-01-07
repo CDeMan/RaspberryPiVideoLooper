@@ -23,6 +23,7 @@ storage.initSync();
 function setCounter(k){
 	i = k%count;
 	storage.setItemSync('count',i);
+	console.log("saved", storage.getItemSync('count'))
 }
 
 function setCount(k){
