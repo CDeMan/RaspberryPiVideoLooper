@@ -78,7 +78,7 @@ fs.readdir(path, function(err, items) {
 
 	//console.log(items[0]);
 	if(items.length > 0){
-		player = Omx(path+"/"+items[getCounter()], "hdmi", false, volume);
+		player = Omx(path+items[getCounter()], "hdmi", false, volume);
 
 		player.on('close', function () {
 			console.log("the player closed");
@@ -90,7 +90,7 @@ fs.readdir(path, function(err, items) {
 	    player.on('close', function () {
 			console.log("the player closed "+getCounter());
 			setCounter(getCounter()+1);
-			player = Omx(path+"/"+getItems()[getCounter()], "hdmi", false, volume);
+			player = Omx(path+getItems()[getCounter()], "hdmi", false, volume);
 			//setCounter(getCounter()+1);
 			console.log(getCounter());
 			console.log(player);
