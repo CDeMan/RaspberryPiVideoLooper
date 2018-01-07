@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var shell = require('shelljs');
+var storage = require('node-persist');
 var fs = require('fs');
 var Omx = require('node-omxplayer');
 var player = null;
@@ -11,8 +12,17 @@ var volume = 100;
 
 var path = "./Videos/";
 
+storage.initSync();
+
+// function onStartUp(){
+
+// 	storage.initSync();
+
+// }
+
 function setCounter(k){
-    i = k%count;
+	i = k%count;
+	storage.setItemSync('count',i);
 }
 
 function setCount(k){
@@ -51,6 +61,12 @@ fs.readdir(path, function(err, items) {
 
 	setCount(items.length);
 
+	i = storage.getItemSync('count');
+
+	if(!i || i >= count){
+		i = 0;
+	}
+
 	//player = Omx(path+"/"+items[i], "hdmi", false, 100);
 
 	//console.log(items[0]);
@@ -65,14 +81,14 @@ fs.readdir(path, function(err, items) {
 	setTimeout(function(){
 
 	    player.on('close', function () {
-		console.log("the player closed "+getCounter());
-		setCounter(getCounter()+1);
-		player = Omx(path+"/"+getItems()[getCounter()], "hdmi", false, volume);
-		//setCounter(getCounter()+1);
-		console.log(getCounter());
-		console.log(player);
-	
-})}, 1000);
+			console.log("the player closed "+getCounter());
+			setCounter(getCounter()+1);
+			player = Omx(path+"/"+getItems()[getCounter()], "hdmi", false, volume);
+			//setCounter(getCounter()+1);
+			console.log(getCounter());
+			console.log(player);
+		}
+	)}, 1000);
 	
     }else{
 	console.log(err);
