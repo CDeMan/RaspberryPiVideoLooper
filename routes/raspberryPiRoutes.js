@@ -102,6 +102,10 @@ router.post('/remote', function(req, res){
 		case "play":
 			res = play(res);
 			break;
+		case "current":
+			//pause
+			res = getCurrent(res);
+			break;
 		case "subtitle":
 			//pause
 			break;
@@ -229,10 +233,15 @@ function back(res){
 
 function getEpisodes(res){
 	var episodes = [];
-	for(var i = 0; i < items.length; i++){
-		episodes.push([i, items[i]]);
+	for(var k = 0; k < items.length; k++){
+		episodes.push([k, items[k]]);
 	}
 	res.json({sucess: true, data: episodes});
+	return res;
+}
+
+function getCurrent(res){
+	res.json({sucess: true, data: items[i]});
 	return res;
 }
 
